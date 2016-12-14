@@ -31,7 +31,7 @@ public class SequentialStack<E> implements Stack<E> {
 	}
 
 	@Override
-	public E top() {
+	public E peek() {
 		return (E) stack[top];
 	}
 

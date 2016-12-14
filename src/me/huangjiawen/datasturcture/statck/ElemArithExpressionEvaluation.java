@@ -1,11 +1,10 @@
 package me.huangjiawen.datasturcture.statck;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import me.huangjiawen.datasturcture.list.List;
 import me.huangjiawen.datasturcture.list.linked.LinkedList;
+import me.huangjiawen.datasturcture.statck.linked.LinkedStack;
 import me.huangjiawen.datasturcture.statck.sequential.SequentialStack;
 
 public class ElemArithExpressionEvaluation {
@@ -35,15 +34,6 @@ public class ElemArithExpressionEvaluation {
 		return result;
 	}
 
-	private boolean isNumber(String numberStr) {
-		try {
-			Integer.parseInt(numberStr);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
 	public List<String> convertToRPN(String[] commonExpres) {
 		List<String> rpnExpressList = new LinkedList<String>();
 		Stack<String> stack = new SequentialStack<String>();
@@ -53,14 +43,14 @@ public class ElemArithExpressionEvaluation {
 			if (isNumber(currentChar)) {
 				rpnExpressList.add(index++, currentChar);
 			} else if (currentChar.equals(")")) {
-				while (!"(".equals(stack.top())) {
+				while (!"(".equals(stack.peek())) {
 					rpnExpressList.add(index++, stack.pop());
 				}
-				if (stack.top().equals("(")) {
+				if (stack.peek().equals("(")) {
 					stack.pop();
 				}
 			} else {
-				if (stack.size() != 0 && isPrior(stack.top(), currentChar)) {
+				if (stack.size() != 0 && isPrior(stack.peek(), currentChar)) {
 					rpnExpressList.add(index++, stack.pop());
 					rpnExpressList.add(index++, currentChar);
 				} else {
@@ -90,6 +80,50 @@ public class ElemArithExpressionEvaluation {
 				}
 			}
 		}
-		return stack.top();
+		return stack.peek();
+	}
+
+	public static boolean isNumber(String numberStr) {
+		try {
+			Integer.parseInt(numberStr);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * leetcode : 224
+	 */
+	public int calculate(String s) {
+		if (s == null || s.length() == 0)
+			return 0;
+
+		Stack<Integer> stack = new LinkedStack<Integer>();
+		int res = 0;
+		int sign = 1;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (Character.isDigit(c)) {
+				int cur = c - '0';
+				while (i + 1 < s.length() && Character.isDigit(s.charAt(i + 1))) {
+					cur = 10 * cur + s.charAt(++i) - '0';
+				}
+				res += sign * cur;
+			} else if (c == '-') {
+				sign = -1;
+			} else if (c == '+') {
+				sign = 1;
+			} else if (c == '(') {
+				stack.push(res);
+				res = 0;
+				stack.push(sign);
+				sign = 1;
+			} else if (c == ')') {
+				res = stack.pop() * res + stack.pop();
+				sign = 1;
+			}
+		}
+		return res;
 	}
 }

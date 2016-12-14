@@ -34,7 +34,7 @@ public class LinkedStack<E> implements Stack<E> {
 	}
 
 	@Override
-	public E top() {
+	public E peek() {
 		return stackTop.next.data;
 	}
 

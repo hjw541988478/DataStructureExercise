@@ -43,6 +43,9 @@ public class StackTest {
 		rpnStrList.print();
 		buffer.append("=").append(expEva.evaluate(rpnStrList));
 		System.out.println(buffer.toString());
+
+		System.out.println(expEva.calculate("3-2+2"));
+		System.out.println(expEva.calculate("(1+(4+5+2)-3)+(6+8)"));
 	}
 
 }

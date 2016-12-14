@@ -9,7 +9,7 @@ package me.huangjiawen.datasturcture.statck;
 public interface Stack<E> {
 	E pop();
 	void push(E data);
-	E top();
+	E peek();
 	void clear();
 	int size();
 	void print();
