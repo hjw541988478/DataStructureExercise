@@ -33,16 +33,10 @@ public class StackTest {
 		linkedStack.push(9);
 		linkedStack.print();
 		System.out.println("---------------------------------");
-		StringBuffer buffer = new StringBuffer();
-		String[] rawStrArry = { "20", "+", "(", "3", "-", "1", ")", "*", "22", "+", "10", "/", "2" };
-		for (String rawStr : rawStrArry) {
-			buffer.append(rawStr);
-		}
 		ElemArithExpressionEvaluation expEva = new ElemArithExpressionEvaluation();
-		List<String> rpnStrList = expEva.convertToRPN(rawStrArry);
-		rpnStrList.print();
-		buffer.append("=").append(expEva.evaluate(rpnStrList));
-		System.out.println(buffer.toString());
+		System.out.println(expEva.evaluate(
+				expEva.convertToRPN(
+						expEva.sliceStringToArray("20+(3-1)*22+10/2"))));
 
 		System.out.println(expEva.calculate("3-2+2"));
 		System.out.println(expEva.calculate("(1+(4+5+2)-3)+(6+8)"));

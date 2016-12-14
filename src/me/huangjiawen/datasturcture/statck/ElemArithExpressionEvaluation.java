@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import me.huangjiawen.datasturcture.list.List;
 import me.huangjiawen.datasturcture.list.linked.LinkedList;
+import me.huangjiawen.datasturcture.list.sequential.SequentialList;
 import me.huangjiawen.datasturcture.statck.linked.LinkedStack;
 import me.huangjiawen.datasturcture.statck.sequential.SequentialStack;
 
@@ -34,12 +35,12 @@ public class ElemArithExpressionEvaluation {
 		return result;
 	}
 
-	public List<String> convertToRPN(String[] commonExpres) {
+	public List<String> convertToRPN(List<String> commonExpres) {
 		List<String> rpnExpressList = new LinkedList<String>();
 		Stack<String> stack = new SequentialStack<String>();
 		int index = 0;
-		for (int i = 0; i < commonExpres.length; i++) {
-			String currentChar = commonExpres[i];
+		for (int i = 0; i < commonExpres.size(); i++) {
+			String currentChar = commonExpres.get(i);
 			if (isNumber(currentChar)) {
 				rpnExpressList.add(index++, currentChar);
 			} else if (currentChar.equals(")")) {
@@ -83,6 +84,37 @@ public class ElemArithExpressionEvaluation {
 		return stack.peek();
 	}
 
+	public List<String> sliceStringToArray(String s) {
+		List<String> sliceList = new LinkedList<String>();
+		int count = 0;
+		int index = 0;
+		char currentChar;
+		int p = 0;
+		while (index < s.length() && (currentChar = s.charAt(index)) != '\n') {
+			if (currentChar == ' ') {
+				index++;
+				continue;
+			}
+			if (currentChar == '(' || currentChar == ')' || currentChar == '+' || currentChar == '-') {
+				sliceList.add(count++, new String(s.toCharArray(), index, 1));
+				index++;
+			} else {
+				while (index + p < s.length() && currentChar >= '0' && currentChar <= '9') {
+					p++;
+					if (index + p < s.length()) {
+						currentChar = s.charAt(index + p);
+					}
+				}
+				if (p > 0) {
+					sliceList.add(count++, new String(s.toCharArray(), index, p));
+					index += p;
+					p = 0;
+				}
+			}
+		}
+		return sliceList;
+	}
+
 	public static boolean isNumber(String numberStr) {
 		try {
 			Integer.parseInt(numberStr);
@@ -124,6 +156,36 @@ public class ElemArithExpressionEvaluation {
 				sign = 1;
 			}
 		}
+		return res;
+	}
+
+	/**
+	 * leetcode : 227
+	 */
+	public int basicCalculate(String s) {
+		int res = 0;
+		int tmpNum = 0;
+		char op = '+';
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (Character.isDigit(c)) {
+				int cur = c - '0';
+				while (i + 1 < s.length() && Character.isDigit(s.charAt(i + 1))) {
+					cur = 10 * cur + s.charAt(++i) - '0';
+				}
+				if (op == '+' || op == '-') {
+					res += tmpNum;
+					tmpNum = cur * (op == '+' ? 1 : -1);
+				} else if (op == '*') {
+					tmpNum *= cur;
+				} else if (op == '/') {
+					tmpNum /= cur;
+				}
+			} else if (c != ' ') {
+				op = c;
+			}
+		}
+		res += tmpNum;
 		return res;
 	}
 }
