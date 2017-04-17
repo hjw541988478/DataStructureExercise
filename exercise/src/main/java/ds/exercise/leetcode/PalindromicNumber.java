@@ -1,11 +1,12 @@
 package ds.exercise.leetcode;
 
-/**
- * https://leetcode.com/problems/palindrome-number
- */
+
 
 public class PalindromicNumber {
 
+    /**
+     * https://leetcode.com/problems/palindrome-number
+     */
     public static boolean isPalindromicNumber(int x) {
         if (x < 0) {
             return false;
@@ -36,7 +37,67 @@ public class PalindromicNumber {
         }
     }
 
+    public static boolean isLetterOrNumber(char ch) {
+        return (ch >= 'a' && ch <= 'z')
+                || isUpperLetter(ch)
+                || (ch >= '0' && ch <= '9');
+    }
+
+    public static boolean isUpperLetter(char ch) {
+        return ch >= 'A' && ch <= 'Z';
+    }
+
+    public static boolean isEqual(char chA, char chB) {
+        if (isUpperLetter(chA)) {
+            chA += 32;
+        }
+        if (isUpperLetter(chB)) {
+            chB += 32;
+        }
+        return chA == chB;
+    }
+
+    /**
+     * https://leetcode.com/problems/valid-palindrome
+     *
+     * @param s
+     * @return
+     */
+    public static boolean isPalindromicNumber(String s) {
+        if (s == null || s.trim().isEmpty()) {
+            return false;
+        }
+        char[] sArr = s.toLowerCase().trim().toCharArray();
+        int size = sArr.length;
+        int start = 0, end = size - 1;
+        while (start < end) {
+            if (!isLetterOrNumber(sArr[start])) {
+                start++;
+                continue;
+            }
+            if (!isLetterOrNumber(sArr[end])) {
+                end--;
+                continue;
+            }
+            if (isLetterOrNumber(sArr[start])
+                    && isLetterOrNumber(sArr[end])) {
+                if (!isEqual(sArr[start], sArr[end])) {
+                    return false;
+                }
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
-        System.out.println(isPalindromicNumber(-2147447412));
+        System.out.println(isPalindromicNumber("  a "));
+        System.out.println(isPalindromicNumber("a     "));
+        System.out.println(isPalindromicNumber("     "));
+        System.out.println(isPalindromicNumber("abcba"));
+        System.out.println(isPalindromicNumber("A man, a plan, a canal: Panama"));
+        System.out.print(isPalindromicNumber("race a car"));
+
     }
 }
