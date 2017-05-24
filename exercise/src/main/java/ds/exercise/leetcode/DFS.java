@@ -27,6 +27,7 @@ public class DFS {
             if (board[i][y] == target) {
                 return false;
             }
+            // 第i个九宫格行列号
             int row = x / 3 * 3 + i / 3;
             int col = y / 3 * 3 + i % 3;
             if (board[row][col] == target) {
