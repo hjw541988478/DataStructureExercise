@@ -56,23 +56,25 @@ public class BinaryTreeTraverse {
     }
 
     /**
-     * 将普通的二叉树前序线索化
+     * 将普通的二叉树中序线索化
      *
      * @param root
      */
-    public void threadingBinaryTree(BinaryThreadNode root) {
+    public void inThreadingBinaryTree(BinaryThreadNode root) {
         if (root != null) {
+            inThreadingBinaryTree(root.left);
+            // 左指针为空，将左指针指向前驱
             if (root.left == null) {
                 root.hasLeftPointer = true;
                 root.left = pre;
             }
-            if (pre.right == null) {
+            // 前一节点的后继指向当前节点
+            if (pre != null && pre.right == null) {
                 pre.hasRightPointer = true;
                 pre.right = root;
             }
             pre = root;
-            threadingBinaryTree(root.left);
-            threadingBinaryTree(root.right);
+            inThreadingBinaryTree(root.right);
         }
     }
 
