@@ -1,4 +1,4 @@
-package ds.exercise.leetcode;
+package ds.exercise.leetcode.twopointers;
 
 /**
  * 11. Container With Most Water
