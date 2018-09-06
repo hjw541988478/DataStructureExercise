@@ -18,7 +18,7 @@ public class ListTest {
 		seqList.print();
 		seqList.get(2);
 		seqList.print();
-		System.out.println("\nLinkedList------------------------------------------");
+        System.out.println("\nMergeSortedList------------------------------------------");
 		LinkedList<Integer> linkedList = new LinkedList<Integer>();
 		linkedList.add(0, 1);
 		linkedList.add(1, 2);
