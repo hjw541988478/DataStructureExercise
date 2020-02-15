@@ -1,14 +1,13 @@
 package ds.exercise.test;
 
-import ds.exercise.statck.ElemArithExpressionEvaluation;
-import ds.exercise.statck.Stack;
-import ds.exercise.statck.linked.LinkedStack;
-import ds.exercise.statck.sequential.SequentialStack;
+import ds.exercise.stack.ArrayStack;
+import ds.exercise.stack.LinkedListStack;
+import ds.exercise.stack.leetcode.ElemArithExpressionEvaluation;
 
 public class StackTest {
 
     public static void main(String[] args) {
-        Stack<Integer> seqStack = new SequentialStack<Integer>();
+        ArrayStack<Integer> seqStack = new ArrayStack<>();
         seqStack.push(1);
         seqStack.push(2);
         seqStack.push(3);
@@ -20,7 +19,7 @@ public class StackTest {
         seqStack.push(9);
         seqStack.print();
         System.out.println("--------------------------------");
-        Stack<Integer> linkedStack = new LinkedStack<Integer>();
+        LinkedListStack<Integer> linkedStack = new LinkedListStack<>();
         linkedStack.push(1);
         linkedStack.push(2);
         linkedStack.push(3);

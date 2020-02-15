@@ -1,4 +1,4 @@
-package ds.exercise.statck;
+package ds.exercise.stack;
 
 /**
  * 栈：限定仅在表尾进行插入或删除的线性表(LIFO)

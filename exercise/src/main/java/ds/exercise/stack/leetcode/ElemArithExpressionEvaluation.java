@@ -1,9 +1,10 @@
-package ds.exercise.statck;
+package ds.exercise.stack.leetcode;
 
 import ds.exercise.list.List;
 import ds.exercise.list.linked.LinkedList;
-import ds.exercise.statck.linked.LinkedStack;
-import ds.exercise.statck.sequential.SequentialStack;
+import ds.exercise.stack.ArrayStack;
+import ds.exercise.stack.LinkedListStack;
+import ds.exercise.stack.Stack;
 
 public class ElemArithExpressionEvaluation {
 
@@ -34,7 +35,7 @@ public class ElemArithExpressionEvaluation {
 
 	public List<String> convertToRPN(List<String> commonExpres) {
 		List<String> rpnExpressList = new LinkedList<String>();
-		Stack<String> stack = new SequentialStack<String>();
+		Stack<String> stack = new ArrayStack<>();
 		int index = 0;
 		for (int i = 0; i < commonExpres.size(); i++) {
 			String currentChar = commonExpres.get(i);
@@ -64,7 +65,7 @@ public class ElemArithExpressionEvaluation {
 
 	public String evaluate(List<String> rpnExpressList) {
 		int index = 0;
-		Stack<String> stack = new SequentialStack<String>();
+		Stack<String> stack = new ArrayStack<>();
 		for (index = 0; index < rpnExpressList.size(); index++) {
 			String currentChar = rpnExpressList.get(index);
 			if (isNumber(currentChar)) {
@@ -128,7 +129,7 @@ public class ElemArithExpressionEvaluation {
 		if (s == null || s.length() == 0)
 			return 0;
 
-		Stack<Integer> stack = new LinkedStack<Integer>();
+		Stack<Integer> stack = new LinkedListStack<>();
 		int res = 0;
 		int sign = 1;
 		for (int i = 0; i < s.length(); i++) {
