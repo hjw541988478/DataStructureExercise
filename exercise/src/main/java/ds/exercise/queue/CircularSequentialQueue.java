@@ -1,6 +1,4 @@
-package ds.exercise.queue.sequential;
-
-import ds.exercise.queue.Queue;
+package ds.exercise.queue;
 
 /**
  * 循环队列：首尾相接的顺序存储结构;
@@ -21,7 +19,7 @@ public class CircularSequentialQueue<E> implements Queue<E> {
 	}
 
 	@Override
-	public void enQueue(E data) {
+	public void enqueue(E data) {
 		if (isQueueFull()) {
 			return;
 		}
@@ -30,7 +28,7 @@ public class CircularSequentialQueue<E> implements Queue<E> {
 	}
 
 	@Override
-	public E deQueue() {
+	public E dequeue() {
 		E deleteData = null;
 		if (isQueueEmpty()) {
 			return null;
@@ -38,6 +36,16 @@ public class CircularSequentialQueue<E> implements Queue<E> {
 		deleteData = (E) queue[front];
 		front = (front + 1) % MAX_SIZE;
 		return deleteData;
+	}
+
+	@Override
+	public boolean empty() {
+		return isQueueEmpty();
+	}
+
+	@Override
+	public E peek() {
+		return (E) queue[front];
 	}
 
 	public boolean isQueueFull() {

@@ -12,6 +12,11 @@ public class LinkedListStack<E> implements Stack<E> {
     }
 
     @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    @Override
     public E pop() {
         if (head == null) {
             return null;

@@ -11,6 +11,11 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    @Override
     public E pop() {
         if (top == -1) {
             return null;
@@ -21,7 +26,7 @@ public class ArrayStack<E> implements Stack<E> {
     @Override
     public void push(E data) {
         if (top == MAX_STACK_SIZE - 1) {
-            return;
+            throw new IllegalArgumentException("already reach max size");
         }
         objects[++top] = data;
     }
