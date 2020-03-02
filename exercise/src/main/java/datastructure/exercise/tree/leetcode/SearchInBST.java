@@ -10,9 +10,9 @@ class SearchInBST {
         if (root == null) {
             return null;
         }
-        if (root.x == val) {
+        if (root.val == val) {
             return root;
-        } else if (root.x > val) {
+        } else if (root.val > val) {
             return searchBST(root.left, val);
         } else {
             return searchBST(root.right, val);

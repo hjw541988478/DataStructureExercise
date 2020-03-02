@@ -13,7 +13,7 @@ public class TreeNodeTraverse {
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            res.add(node.x);
+            res.add(node.val);
             if (node.right != null) {
                 stack.push(node.right);
             }
@@ -37,7 +37,7 @@ public class TreeNodeTraverse {
                 node = node.left;
             }
             node = stack.pop();
-            res.add(node.x);
+            res.add(node.val);
             node = node.right;
         }
         return res;
@@ -52,7 +52,7 @@ public class TreeNodeTraverse {
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            res.addFirst(node.x);
+            res.addFirst(node.val);
             if (node.left != null) {
                 stack.push(node.left);
             }
@@ -75,7 +75,7 @@ public class TreeNodeTraverse {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                level.add(node.x);
+                level.add(node.val);
                 if (node.left != null) {
                     queue.offer(node.left);
                 }

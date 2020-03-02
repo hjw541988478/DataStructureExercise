@@ -1,11 +1,11 @@
 package datastructure.exercise.tree;
 
 public class TreeNode {
-    public int x;
+    public int val;
     public TreeNode left;
     public TreeNode right;
 
-    public TreeNode(int x) {
-        this.x = x;
+    public TreeNode(int val) {
+        this.val = val;
     }
 }

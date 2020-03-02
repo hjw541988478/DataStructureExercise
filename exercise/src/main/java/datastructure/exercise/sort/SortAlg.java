@@ -271,19 +271,19 @@ public class SortAlg {
 	}
 
 	private static void qSort(int[] toBeSortArray, int first, int last) {
-		int pivot;
-		// if(first < last) {
-		// pivot = partition(toBeSortArray, first, last);
-		// qSort(toBeSortArray, first, pivot - 1);
-		// qSort(toBeSortArray, pivot + 1, last);
-		// }
-		// 尾�?�归优化
-		while (first < last) {
-			pivot = partition(toBeSortArray, first, last);
-			qSort(toBeSortArray, first, pivot - 1);
-			first = pivot + 1;
-		}
-	}
+        int pivot;
+        // if(first < last) {
+        // pivot = partition(toBeSortArray, first, last);
+        // qSort(toBeSortArray, first, pivot - 1);
+        // qSort(toBeSortArray, pivot + 1, last);
+        // }
+        // 尾递归优化
+        while (first < last) {
+            pivot = partition(toBeSortArray, first, last);
+            qSort(toBeSortArray, first, pivot - 1);
+            first = pivot + 1;
+        }
+    }
 
 	/**
 	 * 快排的核心方法，选择一个记录为枢轴(pivot)，使得在枢轴左边的记录都比它小，右边的都比它大。

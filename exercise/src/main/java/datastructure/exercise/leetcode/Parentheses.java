@@ -102,6 +102,7 @@ public class Parentheses {
     }
 
     public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
         Parentheses demo = new Parentheses();
         System.out.println(demo.isValid("{}{}"));
         long start = System.currentTimeMillis();

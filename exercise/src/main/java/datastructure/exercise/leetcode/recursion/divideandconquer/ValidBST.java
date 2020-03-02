@@ -19,13 +19,13 @@ public class ValidBST {
         if (root == null) {
             return true;
         }
-        if (lower != null && root.x <= lower) {
+        if (lower != null && root.val <= lower) {
             return false;
         }
-        if (upper != null && root.x >= upper) {
+        if (upper != null && root.val >= upper) {
             return false;
         }
-        return isValidNode(root.left, lower, root.x) && isValidNode(root.right, root.x, upper);
+        return isValidNode(root.left, lower, root.val) && isValidNode(root.right, root.val, upper);
     }
 
     LinkedList<TreeNode> s = new LinkedList();
@@ -47,19 +47,19 @@ public class ValidBST {
                 continue;
             }
 
-            if (lower != null && cur.x <= lower) {
+            if (lower != null && cur.val <= lower) {
                 return false;
             }
-            if (upper != null && cur.x >= upper) {
+            if (upper != null && cur.val >= upper) {
                 return false;
             }
 
             s.push(cur.left);
             l.push(lower);
-            u.push(cur.x);
+            u.push(cur.val);
 
             s.push(cur.right);
-            l.push(cur.x);
+            l.push(cur.val);
             u.push(upper);
         }
         return true;
@@ -78,10 +78,10 @@ public class ValidBST {
                 root = root.left;
             }
             root = st.poll();
-            if (min != null && root.x <= min) {
+            if (min != null && root.val <= min) {
                 return false;
             }
-            min = root.x;
+            min = root.val;
             root = root.right;
         }
         return true;
