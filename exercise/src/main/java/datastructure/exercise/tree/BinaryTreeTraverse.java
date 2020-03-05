@@ -1,117 +1,130 @@
 package datastructure.exercise.tree;
 
-/**
- * Created by Administrator on 024 2017/5/24.
- */
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class BinaryTreeTraverse {
 
-    int count = 0;
-    BinaryThreadNode pre;
-
-    public BinaryTreeNode createBinaryTree(BinaryTreeNode root, String[] strings) {
-        if ("#".equals(strings[count])) {
-            root = null;
-        } else {
-            root.data = strings[count];
-            ++count;
-            root.left = createBinaryTree(new BinaryTreeNode(), strings);
-            ++count;
-            root.right = createBinaryTree(new BinaryTreeNode(), strings);
-        }
-        return root;
-    }
-
-    /**
-     * 前序遍历
-     *
-     * @param root
-     */
-    public void preOrderTraverse(BinaryTreeNode root) {
-        if (root == null) {
-            System.out.print("#");
-            return;
-        }
-        System.out.print(root.data);
-        preOrderTraverse(root.left);
-        preOrderTraverse(root.right);
-    }
-
-    public void middleOrderTraverse(BinaryTreeNode root) {
-        if (root == null) {
-            return;
-        }
-        preOrderTraverse(root.left);
-        System.out.println(root.data);
-        preOrderTraverse(root.right);
-    }
-
-    public void postOrderTraverse(BinaryTreeNode root) {
-        if (root == null) {
-            return;
-        }
-        preOrderTraverse(root.left);
-        preOrderTraverse(root.right);
-        System.out.println(root.data);
-    }
-
-    /**
-     * 将普通的二叉树中序线索化
-     *
-     * @param root
-     */
-    public void inThreadingBinaryTree(BinaryThreadNode root) {
-        if (root != null) {
-            inThreadingBinaryTree(root.left);
-            // 左指针为空，将左指针指向前驱
-            if (root.left == null) {
-                root.hasLeftPointer = true;
-                root.left = pre;
-            }
-            // 前一节点的后继指向当前节点
-            if (pre != null && pre.right == null) {
-                pre.hasRightPointer = true;
-                pre.right = root;
-            }
-            pre = root;
-            inThreadingBinaryTree(root.right);
-        }
-    }
-
-    /**
-     * 遍历加了头节点的线索二叉树（时间复杂度大N）
-     * 具体：
-     * 1. 第一个访问的结点的前驱指向头结点
-     * 2. 最后一个访问的结点的后继指向头结点
-     * 3. 头结点的左指针指向根节点
-     * 4. 头结点的右指针指向最后一个访问的结点
-     *
-     * @param root
-     */
-    public void threadBinaryTreeMiddleOrderTraverse(BinaryThreadNode root) {
-        BinaryThreadNode p = root.left;
-        while (p != root) {
-
-            while (!p.hasLeftPointer) {
-                p = p.left;
-            }
-
-            System.out.println(p.data);
-
-            while (p.hasRightPointer && p.right != root) {
-                p = p.right;
-                System.out.println(p.data);
-            }
-            p = p.right;
-        }
-
-    }
-
     public static void main(String[] args) {
-        BinaryTreeTraverse demo = new BinaryTreeTraverse();
-        BinaryTreeNode root = demo
-                .createBinaryTree(new BinaryTreeNode()
-                        , new String[]{"A", "B", "#", "D", "#", "#", "C", "#", "#"});
-        demo.preOrderTraverse(root);
+        BinaryTreeTraverse treeTraverse = new BinaryTreeTraverse();
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        List<Integer> res = new ArrayList<>();
+//        treeTraverse.inOrderTraverse2(root, res);
+//        System.out.println(res);
+//        res = treeTraverse.postOrderTraverseIteration(root);
+        System.out.println(treeTraverse.levelOrderTraverse(root));
+    }
+
+    public void preOrderTraverseRecursion(TreeNode root, List<Integer> res) {
+        if (root != null) {
+            res.add(root.val);
+            preOrderTraverseRecursion(root.left, res);
+            preOrderTraverseRecursion(root.right, res);
+        }
+    }
+
+    public List<Integer> preOrderTraverseIteration(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            root = stack.pop();
+            res.add(root.val);
+            if (root.right != null) {
+                stack.push(root.right);
+            }
+            if (root.left != null) {
+                stack.push(root.left);
+            }
+        }
+        return res;
+    }
+
+    public void inOrderTraverseRecursion(TreeNode root, List<Integer> res) {
+        if (root != null) {
+            inOrderTraverseRecursion(root.left, res);
+            res.add(root.val);
+            inOrderTraverseRecursion(root.right, res);
+        }
+    }
+
+    public List<Integer> inorderTraverseIteration(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        LinkedList<TreeNode> s = new LinkedList();
+        TreeNode cur = root;
+        while (cur != null || !s.isEmpty()) {
+            while (cur != null) {
+                s.push(cur);
+                cur = cur.left;
+            }
+            cur = s.pop();
+            res.add(cur.val);
+            cur = cur.right;
+        }
+        return res;
+    }
+
+    public void postOrderTraverseRecursion(TreeNode root, List<Integer> res) {
+        if (root != null) {
+            inOrderTraverseRecursion(root.left, res);
+            inOrderTraverseRecursion(root.right, res);
+            res.add(root.val);
+        }
+    }
+
+    public List<Integer> postOrderTraverseIteration(TreeNode root) {
+        LinkedList<Integer> res = new LinkedList<>();
+        if (root == null) {
+            return res;
+        }
+        LinkedList<TreeNode> s = new LinkedList();
+        s.push(root);
+        while (!s.isEmpty()) {
+            root = s.pop();
+            res.addFirst(root.val);
+            if (root.left != null) {
+                s.push(root.left);
+            }
+            if (root.right != null) {
+                s.push(root.right);
+            }
+        }
+        return res;
+    }
+
+    public List<List<Integer>> levelOrderTraverse(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        if (root == null) {
+            return res;
+        }
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> list = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                root = q.poll();
+                list.add(root.val);
+                if (root.left != null) {
+                    q.offer(root.left);
+                }
+                if (root.right != null) {
+                    q.offer(root.right);
+                }
+            }
+            res.add(list);
+        }
+        return res;
     }
 }

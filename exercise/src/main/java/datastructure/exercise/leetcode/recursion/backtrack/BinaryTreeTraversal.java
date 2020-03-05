@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * https://leetcode.com/problems/binary-tree-inorder-traversal/
+ * <p>
+ * https://leetcode.com/problems/binary-tree-level-order-traversal/
  */
 public class BinaryTreeTraversal {
 
@@ -45,7 +47,23 @@ public class BinaryTreeTraversal {
         return res;
     }
 
-    public List<List<Integer>> levelOrder(TreeNode root) {
+    public List<List<Integer>> levelOrderByBFS(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        levelHelper(res, root, 0);
+        return res;
+    }
+
+    public void levelHelper(List<List<Integer>> res, TreeNode root, int height) {
+        if (root == null) return;
+        if (height >= res.size()) {
+            res.add(new LinkedList<Integer>());
+        }
+        res.get(height).add(root.val);
+        levelHelper(res, root.left, height + 1);
+        levelHelper(res, root.right, height + 1);
+    }
+
+    public List<List<Integer>> levelOrderByIteration(TreeNode root) {
         List<List<Integer>> res = new ArrayList();
         if (root == null) {
             return res;
